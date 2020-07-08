@@ -4,13 +4,17 @@ import java.io.PrintWriter;
 
 
 public class FakeDataApp {
-    static String sidmodFileName = "SIDMOD_TEST_dev_file_fake_1000.txt";
-    static String cbmsFileName = "CBMS_TEST_dev_file_fake_1000.csv";
-    static int numRecords = 1000;
+    static String sidmodFileName = "SIDMOD_TEST_dev_file_fake_400000.txt";
+    static String cbmsFileName = "CBMS_TEST_dev_file_fake_400000.csv";
+    static String corhioFileName = "CORHIO_TEST_dev_file_fake_400000.txt";
+
+    static int numRecords = 400000;
 
     public static void main(String[] args) throws IOException {
         SidmodData sidmodData = new SidmodData();
-        CbmsData cbmsData = new CbmsData();
+        NewCbmsData cbmsData = new NewCbmsData();
+        CorhioReturnData corhioData = new CorhioReturnData();
+
 
 //        for(int i = 0; i<10;i++) {
 //            System.out.println(sidmodData.getSidmodLine());
@@ -34,5 +38,18 @@ public class FakeDataApp {
             printWriter2.println(cbmsData.getCbmsLine(sidmodIds.getSidmodIdFromList(i)));
         }
         printWriter2.close();
+
+
+
+        FileWriter fileWriter3 = new FileWriter(corhioFileName);
+        PrintWriter printWriter3 = new PrintWriter(fileWriter3);
+        printWriter3.println(corhioData.getCorhioHeader());
+        for (int i = 0; i < numRecords; i++) {
+            //System.out.println(sidmodData.getSidmodLine());
+            printWriter3.println(corhioData.getCorhioLine(sidmodIds.getSidmodIdFromList(i)));
+        }
+        printWriter3.close();
+
+
     }
 }
