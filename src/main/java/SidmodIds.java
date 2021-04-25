@@ -33,8 +33,20 @@ public class SidmodIds {
 
     String generateRandomSidmodId() {
         Random r = new Random();
-        char c = (char)(r.nextInt(26) + 'a');
-        String id = faker.number().digits(6);
+
+        //char c = (char)(r.nextInt(26) + 'a');
+        //char c = (char)(r.nextInt(25) + 'a'); // exclude Z
+
+        //use only Z
+        char c = 'Z';
+
+
+        //orig
+        //String id = faker.number().digits(6);
+
+        //using to create all numbers starting with a 1
+        String id = "1" + faker.number().digits(5);
+
         return Character.toString(c).concat(id).toUpperCase();
     }
 }

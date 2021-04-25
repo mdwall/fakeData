@@ -58,7 +58,7 @@ properties:
 public class SidmodData {
     Faker faker = new Faker();
     DateTimeFormatter dateFormat =  DateTimeFormatter.ofPattern("yyyyMMdd");
-    DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("kkmmss");
+    DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HHmmss");
 
     public String getSidmodLine() {
         return String.format("%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|",
@@ -151,11 +151,11 @@ public class SidmodData {
     }
 
     protected String getSndLast() {
-        return "SNDL";
+        return "LAST";
     }
 
     protected String getSndFirst() {
-        return "SNDF";
+        return "FST";
     }
 
     protected String getBirthdate() {
@@ -171,12 +171,14 @@ public class SidmodData {
     //21 chars
     protected String getLastName() {
         String lname = faker.name().lastName().toUpperCase();
+        if (lname.length() > 21) {lname = lname.substring(0,20);}
         return String.format("%0$-21s", lname);
     }
 
     protected String getFirstName() {
         String fname = faker.name().firstName().toUpperCase();
-        return String.format("%0$-10s", fname);
+        if (fname.length() > 14) {fname = fname.substring(0,14);}
+        return String.format("%0$-15s", fname);
     }
 
     protected String getTitle() {
@@ -185,6 +187,7 @@ public class SidmodData {
 
     protected String getMiddleName() {
         String mname = faker.name().firstName().toUpperCase();
+        if (mname.length() > 10) {mname = mname.substring(0,9);}
         return String.format("%0$-10s", mname);
     }
 
