@@ -6,28 +6,44 @@ import java.io.PrintWriter;
 public class FakeDataApp {
     //static String sidmodFileName = "SIDMOD_TEST_dev_file_fake_5000000.txt";
 
-    //static String sidmodFileName = "SIDMOD_HOURLY_FILE_20201026140015.txt";
+    static String sidmodFileName = "SIDMOD_HOURLY_FILE_20210518140015.txt";
 
     static String cbmsFileName = "CBMS_TEST_dev_file_fake_5000000.csv";
     //static String corhioFileName = "CORHIO_TEST_dev_file_fake_10.txt";
 
-    static String sspsFileName = "SSPS_10_20210423.txt";
+    static String sspsFileName = "SSPS_5000000_20210506.txt";  //"TEST_UPDATE_20210503.txt";//"SSPS_10_20210423.txt";
 
-    static int numRecords = 10;
+    static String sspDataFileName = "MEDICAID_Delta_20220601_20220617_20000_Count.txt";
+
+    static int numRecords = 20000;
 
     public static void main(String[] args) throws IOException {
         SidmodData sidmodData = new SidmodData();
         NewCbmsData cbmsData = new NewCbmsData();
         CorhioReturnData corhioData = new CorhioReturnData();
-        SourceSystemPersonData sspsData = new SourceSystemPersonData();
+        SourceSystemPersonData sspsData = new SourceSystemPersonData(sspsFileName);
+        SSPFileData sspFileData = new SSPFileData(sspsFileName);
 
 
 //        for(int i = 0; i<10;i++) {
 //            System.out.println(sidmodData.getSidmodLine());
 //        }
 
-        SidmodIds sidmodIds = new SidmodIds(numRecords);
 
+        //SidmodIds sidmodIds = new SidmodIds(numRecords);
+
+        FileWriter fileWriter = new FileWriter(sspDataFileName);
+        PrintWriter printWriter = new PrintWriter(fileWriter);
+        printWriter.println(sspFileData.getHeader());
+        for (int i = 0; i < numRecords; i++) {
+            //System.out.println(sidmodData.getSidmodLine());
+            printWriter.println(sspFileData.getSourceSystemPersonLine());
+        }
+        printWriter.close();
+
+
+//        SidmodIds sidmodIds = new SidmodIds(numRecords);
+//
 //        FileWriter fileWriter = new FileWriter(sidmodFileName);
 //        PrintWriter printWriter = new PrintWriter(fileWriter);
 //        for (int i = 0; i < numRecords; i++) {
@@ -45,13 +61,13 @@ public class FakeDataApp {
 //        }
 //        printWriter2.close();
 
-        FileWriter fileWriter3 = new FileWriter(sspsFileName);
-        PrintWriter printWriter3 = new PrintWriter(fileWriter3);
-        printWriter3.println(sspsData.getHeader());
-        for (int i = 0; i < numRecords; i++) {
-            printWriter3.println(sspsData.getSourceSystemPersonLine());
-        }
-        printWriter3.close();
+//        FileWriter fileWriter3 = new FileWriter(sspsFileName);
+//        PrintWriter printWriter3 = new PrintWriter(fileWriter3);
+//        printWriter3.println(sspsData.getHeader());
+//        for (int i = 0; i < numRecords; i++) {
+//            printWriter3.println(sspsData.getSourceSystemPersonLine());
+//        }
+//        printWriter3.close();
 //
 //
 //

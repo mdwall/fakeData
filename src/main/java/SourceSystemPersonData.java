@@ -20,9 +20,9 @@ A|3234|TS||DONT|ADD||I|M|1972-06-04|123456789|987654321||12345 TEST ST|UNIT 5|DE
 
 
 public class SourceSystemPersonData {
-    private static final String UPDATE_TYPE = "A";
+    private static final String UPDATE_TYPE = "";
     private static final String SOURCE_SYSTEM_NAME = "TS";
-    private static final String TRANSMISSION_ID = "SSPS_10_20210423.txt";
+    private String TRANSMISSION_ID;
     private static final String STATUS = "NEW";
     private static final String SOURCE_SYS_CREATE_DATE_LOW = "2001-01-01";
     private static final String SOURCE_SYS_CREATE_DATE_HIGH = "2015-12-31";
@@ -35,6 +35,9 @@ public class SourceSystemPersonData {
     DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HHmmss");
     DateTimeFormatter dateTimeFormat =  DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
+    public SourceSystemPersonData(String transmissionId) {
+        this.TRANSMISSION_ID = transmissionId;
+    }
 
 
     public String getHeader() {
@@ -96,7 +99,7 @@ public class SourceSystemPersonData {
     }
 
     protected String getFirstName() {
-        return valueOrBlank(faker.name().firstName().toUpperCase());
+        return faker.name().firstName().toUpperCase();
     }
 
     protected String getLastName() {
@@ -121,7 +124,7 @@ public class SourceSystemPersonData {
     }
 
     protected String getGender() {
-        String gender = "O";
+        String gender = "X";
         Random randomGenerator = new Random();
         int randomInt = randomGenerator.nextInt(4);
         //System.out.println(randomInt);

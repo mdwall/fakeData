@@ -34,11 +34,11 @@ public class SidmodIds {
     String generateRandomSidmodId() {
         Random r = new Random();
 
-        //char c = (char)(r.nextInt(26) + 'a');
+        char c = (char)(r.nextInt(26) + 'a');
         //char c = (char)(r.nextInt(25) + 'a'); // exclude Z
 
         //use only Z
-        char c = 'Z';
+        //char c = 'Z';
 
 
         //orig
