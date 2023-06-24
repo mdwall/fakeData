@@ -12,7 +12,7 @@ import java.util.Random;
  */
 
 
-public class SSPFileData {
+public class SSPFileDataUniqueSidmod {
     private static final String UPDATE_TYPE = "";
     private static final String SOURCE_SYSTEM_NAME = "TS";
     private String TRANSMISSION_ID;
@@ -22,6 +22,7 @@ public class SSPFileData {
     private static final String SOURCE_SYS_UPDATE_DATE_LOW = "2016-01-01";
     private static final String SOURCE_SYS_UPDATE_DATE_HIGH = "2020-12-31";
     private Integer sourceSystemId = 2000000;
+    private String sidmodId = "B0000000";
 
     Faker faker = new Faker();
     DateTimeFormatter dateFormat =  DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -32,7 +33,7 @@ public class SSPFileData {
 
     //DateTimeFormatter dateTimeFormat =  DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 
-    public SSPFileData(String transmissionId) {
+    public SSPFileDataUniqueSidmod(String transmissionId) {
         this.TRANSMISSION_ID = transmissionId;
     }
 
@@ -43,6 +44,7 @@ public class SSPFileData {
 
 
     public String getSourceSystemPersonLine() {
+        this.incrementSidmodId();
         return String.format("%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s",
 
                 getSourceSystemId(),
@@ -73,8 +75,25 @@ public class SSPFileData {
 
 
     }
-
-
+    /**
+     * Generate sequential SidmodIds
+     * @return
+     */
+    protected void incrementSidmodId() {
+        char sidmodLetter = sidmodId.charAt(0);  //  sidmodId.substring(0, 0);
+        Integer sidmodNum = Integer.parseInt(sidmodId.substring(1, 7));
+        if (sidmodNum < 999999) {
+            sidmodNum++;
+        } else {
+            sidmodNum = 0;
+            if(sidmodLetter < 'Z') {
+                sidmodLetter++;
+            } else {
+                sidmodLetter = 'A';
+            }
+        }
+        this.sidmodId = Character.toString(sidmodLetter).concat(String.format("%06d", sidmodNum));
+    }
 
     protected String getUpdateType() {
         String updateType = "";
@@ -93,19 +112,20 @@ public class SSPFileData {
     }
 
     protected String getSourceSystemId() {
-        sourceSystemId++;
-        return sourceSystemId.toString();
+        // sourceSystemId++;
+        // return sourceSystemId.toString();
+        return sidmodId;
     }
 
     protected String getSourceSystemName() {
         return SOURCE_SYSTEM_NAME;
     }
 
+
+
     protected String getSidmodId() {
-        Random r = new Random();
-        char c = (char)(r.nextInt(26) + 'a');
-        String id = faker.number().digits(6);
-        return valueOrBlank(Character.toString(c).concat(id).toUpperCase());
+        return sidmodId;
+
     }
 
     protected String getFirstName() {

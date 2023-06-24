@@ -134,3 +134,4 @@ buildNumber.properties
 *file_fake_*
 .idea/jarRepositories.xml
 .idea/vcs.xml
+*.txt
